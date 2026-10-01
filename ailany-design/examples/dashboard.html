@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>workspace — ailany</title>
+<meta name="description" content="Reference app / dashboard screen for the ailany-design skill.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Silkscreen&display=swap" rel="stylesheet">
+<style>
+/* tokens:start */
+/* ==========================================================================
+   ailany-design tokens
+   Modern web with dial-up memories. Paste this whole block into a page's
+   <style> (or a tokens.css) and build only with these variables.
+
+   Fonts (one <link>, keep the families you actually use):
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Silkscreen&display=swap" rel="stylesheet">
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* ---- Surfaces: warm paper, not pure white ------------------------------ */
+  --paper:        #E6E6E1;  /* page background (desk) */
+  --paper-2:      #DCDCD6;  /* sunken areas, table stripes, hover on paper */
+  --surface:      #F4F4F2;  /* windows, cards, panels sitting on paper */
+  --surface-2:    #FFFFFF;  /* inputs, inner wells, popovers */
+  --ink:          #0B0B0A;  /* text + solid buttons */
+  --ink-2:        #57554F;  /* secondary text (AA on paper: 5.9:1) */
+  --ink-3:        #8E8B85;  /* decorative only: dot grid, disabled, dividers */
+  --line:         rgba(11, 11, 10, 0.12);
+  --line-strong:  rgba(11, 11, 10, 0.28);
+
+  /* ---- Y2K accents: use ONE as the page's lead, others as sparks --------- */
+  --dialup:       #2433FF;  /* electric blue: links, gel buttons, focus. White text OK (7:1) */
+  --dialup-ink:   #1A2A6C;  /* navy for serif headlines on light/sky */
+  --lcd:          #C8F560;  /* LCD lime: highlights, screens, success. Ink text only */
+  --lcd-ink:      #22300A;  /* pixel text on lime */
+  --sticky:       #F3C4EC;  /* sticky-note pink: notes, onboarding, badges. Ink text only */
+  --signal:       #FF4A1C;  /* signal orange: cursor dot, live, alerts. Ink text only (white fails) */
+  --sticker:      #FFE600;  /* sticker yellow: round CTAs, "new". Ink text only */
+  --online:       #19C26B;  /* status dot only, never text */
+  --on-accent:    #0B0B0A;  /* text on lcd/sticky/signal/sticker. Stays dark in dark mode */
+
+  /* Sky for heroes (the calm optimism of the early internet) */
+  --sky: linear-gradient(180deg, #BFDDFF 0%, #E4F1FF 45%, #FFFFFF 100%);
+
+  /* ---- Type ---------------------------------------------------------------- */
+  --font-display: "Inter Tight", "Helvetica Neue", Arial, sans-serif;  /* huge, tight */
+  --font-sans:    "Geist", "Inter", system-ui, sans-serif;             /* UI + body */
+  --font-mono:    "Geist Mono", ui-monospace, "SFMono-Regular", monospace; /* micro labels, data */
+  --font-serif:   "Instrument Serif", "Times New Roman", serif;       /* one soft headline, quotes */
+  --font-pixel:   "Silkscreen", "Geist Mono", monospace;               /* stickers, LCD, tiny tags */
+
+  /* Fluid display scale: tight tracking, tight leading */
+  --step-hero:  clamp(3.5rem, 11vw, 10rem);   /* wordmarks, one per page */
+  --step-1:     clamp(2.5rem, 6.5vw, 6rem);   /* section headlines */
+  --step-2:     clamp(1.75rem, 3.6vw, 3rem);  /* sub-headlines, big numbers */
+  --step-3:     clamp(1.25rem, 2vw, 1.625rem);/* card titles */
+  --text-lg:    1.125rem;
+  --text:       1rem;       /* body 16px */
+  --text-sm:    0.875rem;   /* UI 14px: app chrome, tables */
+  --text-xs:    0.75rem;    /* captions */
+  --micro:      0.6875rem;  /* 11px mono/pixel labels, ALWAYS uppercase + tracked */
+
+  --track-display: -0.045em;
+  --track-tight:   -0.02em;
+  --track-micro:    0.08em;
+  --lead-display:   0.88;
+  --lead-tight:     1.1;
+  --lead-body:      1.5;
+
+  /* ---- Space: 4px base, generous on landing, compact in apps --------------- */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 24px;
+  --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 160px;
+  --gutter: clamp(16px, 2.2vw, 32px);
+  --section: clamp(96px, 14vw, 200px);
+
+  /* ---- Shape ---------------------------------------------------------------- */
+  --r-0: 0px;        /* flat glass, editorial blocks */
+  --r-1: 6px;        /* tags, small buttons, inputs inside windows */
+  --r-2: 10px;       /* list rows, menus */
+  --r-3: 16px;       /* windows, cards */
+  --r-pill: 999px;   /* nav, chat input, gel buttons, tags */
+  --chamfer: 14%;    /* octagon cards: clip-path corners */
+
+  /* ---- Depth: flat by default; old-internet hard shadows as accents -------- */
+  --shadow-none: none;
+  --shadow-window: 0 1px 0 rgba(255,255,255,.6) inset, 0 30px 60px -30px rgba(11,11,10,.25);
+  --shadow-hard: 4px 4px 0 var(--ink);           /* stickers, retro buttons */
+  --shadow-hard-sm: 2px 2px 0 var(--ink);
+
+  /* ---- Flat glass (overlays only: modals, nav, popovers, toasts) ----------- */
+  --glass-bg:     rgba(240, 240, 238, 0.72);
+  --glass-blur:   blur(10px) saturate(1.3);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.55);
+
+  /* Aqua gel (primary CTA): */
+  --gel: linear-gradient(180deg, #6C8BFF 0%, #2433FF 52%, #1B27D6 100%);
+  --gel-shine: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,0));
+
+  /* ---- Motion --------------------------------------------------------------- */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);     /* expo out: reveals, windows */
+  --ease-inout:  cubic-bezier(0.76, 0, 0.24, 1);    /* curtains, page wipes */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* stickers, toggles, pop-ins */
+  --dur-micro: 160ms;  /* hover, press */
+  --dur-ui:    320ms;  /* menus, toasts, modals */
+  --dur-reveal: 900ms; /* text + section reveals */
+  --dur-hero:  1400ms; /* preloader beats */
+
+  /* ---- Texture (pick ONE per page) ------------------------------------------ */
+  --tex-dots: radial-gradient(var(--ink-3) 0.8px, transparent 0.8px) 0 0 / 22px 22px;
+  --tex-scan: repeating-linear-gradient(0deg, rgba(0,0,0,.06) 0 1px, transparent 1px 3px);
+
+  /* ---- Layers ---------------------------------------------------------------- */
+  --z-texture: 1; --z-content: 2; --z-nav: 50; --z-cursor: 80; --z-modal: 90; --z-loader: 100;
+}
+
+/* ---- Dark: "after midnight" desk. Same accents, inverted paper ------------ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #0B0B0A; --paper-2: #181715; --surface: #151513; --surface-2: #1F1E1B;
+    --ink: #E8E8E3; --ink-2: #9A968F; --ink-3: #4A4843;
+    --line: rgba(232,232,227,.12); --line-strong: rgba(232,232,227,.28);
+    --dialup: #7C9BFF; --dialup-ink: #BFD0FF;
+    --glass-bg: rgba(24, 23, 21, 0.84); --glass-border: 1px solid rgba(255,255,255,.08);
+    --shadow-window: 0 30px 60px -30px rgba(0,0,0,.8);
+    --sky: linear-gradient(180deg, #0E1640 0%, #0B0B0A 100%);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #0B0B0A; --paper-2: #181715; --surface: #151513; --surface-2: #1F1E1B;
+  --ink: #E8E8E3; --ink-2: #9A968F; --ink-3: #4A4843;
+  --line: rgba(232,232,227,.12); --line-strong: rgba(232,232,227,.28);
+  --dialup: #7C9BFF; --dialup-ink: #BFD0FF;
+  --glass-bg: rgba(24, 23, 21, 0.84); --glass-border: 1px solid rgba(255,255,255,.08);
+  --shadow-window: 0 30px 60px -30px rgba(0,0,0,.8);
+  --sky: linear-gradient(180deg, #0E1640 0%, #0B0B0A 100%);
+}
+
+/* ---- Base ------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 var(--text)/var(--lead-body) var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+::selection { background: var(--lcd); color: var(--on-accent); }
+:focus-visible { outline: 2px solid var(--dialup); outline-offset: 3px; border-radius: 4px; }
+img, video, canvas, svg { display: block; max-width: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important; scroll-behavior: auto !important;
+  }
+}
+/* tokens:end */
+
+body { background: var(--paper) var(--tex-dots); min-height: 100vh; padding: 20px; font-size: var(--text-sm); }
+.micro { font: 500 var(--micro)/1.3 var(--font-mono); letter-spacing: var(--track-micro); text-transform: uppercase; color: var(--ink-2); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+button { font: inherit; color: inherit; }
+
+/* ---------- app window ---------- */
+.app { max-width: 1480px; margin: 0 auto; min-height: calc(100vh - 40px); display: grid; grid-template-rows: 44px 1fr auto;
+  background: var(--surface); border-radius: var(--r-3); border: 1px solid var(--line); box-shadow: var(--shadow-window); overflow: hidden; }
+.bar { display: flex; align-items: center; gap: var(--s-3); padding: 0 var(--s-4); border-bottom: 1px solid var(--line); }
+.lights { display: flex; gap: 6px; margin-right: var(--s-3); }
+.lights i { width: 12px; height: 12px; border-radius: 50%; background: #FF5F57; } .lights i:nth-child(2) { background: #FEBC2E; } .lights i:nth-child(3) { background: #28C840; }
+.ghost { width: 30px; height: 30px; display: grid; place-items: center; border: 0; background: none; border-radius: var(--r-1); cursor: pointer; color: var(--ink-2); }
+.ghost:hover { background: var(--paper-2); color: var(--ink); }
+.ghost svg { width: 16px; height: 16px; }
+.nav-arrows { display: flex; }
+.bar__title { flex: 1; text-align: center; }
+.search-btn { display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 10px; border: 1px solid var(--line); background: var(--surface-2);
+  border-radius: var(--r-pill); color: var(--ink-2); cursor: pointer; min-width: 200px; }
+.search-btn kbd { margin-left: auto; font: 500 10px/1 var(--font-mono); padding: 3px 5px; border-radius: 4px; background: var(--paper-2); }
+
+.body { display: grid; grid-template-columns: 240px 1fr; gap: var(--s-4); padding: var(--s-4); min-height: 0; }
+
+/* ---------- sidebar ---------- */
+.side { display: flex; flex-direction: column; gap: 2px; padding: 10px; background: var(--surface-2); border-radius: var(--r-3); }
+.side__item { display: flex; gap: 10px; align-items: center; padding: 8px 10px; border-radius: var(--r-2); color: var(--ink); text-decoration: none; }
+.side__item svg { width: 16px; height: 16px; flex: none; color: var(--ink-2); }
+.side__item:hover { background: var(--paper); }
+.side__item.is-active { background: var(--paper-2); font-weight: 500; }
+.side__item.is-active svg { color: var(--ink); }
+.side__badge { margin-left: auto; font: 500 10px/1 var(--font-mono); background: var(--signal); color: var(--on-accent); padding: 3px 6px; border-radius: var(--r-pill); }
+.side__group { margin: 16px 10px 4px; color: var(--ink-2); font-size: var(--text-xs); }
+.dot { width: 8px; height: 8px; border-radius: 50%; flex: none; margin: 0 4px; }
+.side__foot { margin-top: auto; border-top: 1px solid var(--line); border-radius: 0; padding-top: 12px; }
+
+/* ---------- main ---------- */
+.main { display: grid; gap: var(--s-4); align-content: start; min-width: 0; }
+.head { display: flex; justify-content: space-between; align-items: end; gap: var(--s-4); flex-wrap: wrap; padding: var(--s-2) var(--s-1) var(--s-2); }
+.head h1 { font: 500 clamp(28px, 3vw, 40px)/1 var(--font-display); letter-spacing: -0.035em; margin: 6px 0 0; }
+.head__actions { display: flex; gap: var(--s-3); align-items: center; flex-wrap: wrap; }
+.tabs { display: inline-flex; padding: 3px; gap: 2px; background: var(--paper-2); border-radius: var(--r-pill); }
+.tabs button { border: 0; background: none; padding: 6px 14px; border-radius: var(--r-pill); cursor: pointer; font-weight: 500; color: var(--ink-2); }
+.tabs button[aria-selected="true"] { background: var(--surface-2); color: var(--ink); box-shadow: 0 1px 2px rgba(11,11,10,.12); }
+.btn-gel { position: relative; display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 18px; border-radius: var(--r-pill);
+  border: 1px solid #1A22B0; color: #fff; background: var(--gel); font: 500 14px/1 var(--font-sans); cursor: pointer;
+  box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 6px 16px -6px rgba(36,51,255,.6); transition: transform var(--dur-micro) var(--ease-out), filter var(--dur-micro); }
+.btn-gel::before { content: ""; position: absolute; inset: 2px 10px auto; height: 45%; border-radius: var(--r-pill); background: var(--gel-shine); opacity: .7; pointer-events: none; }
+.btn-gel:hover { filter: brightness(1.08); } .btn-gel:active { transform: translateY(1px) scale(.98); }
+.btn { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: var(--r-1); background: var(--ink); color: var(--paper);
+  border: 0; cursor: pointer; font: 500 var(--micro)/1 var(--font-mono); letter-spacing: var(--track-micro); text-transform: uppercase; }
+.btn--quiet { background: transparent; color: var(--ink); border: 1px solid var(--line-strong); }
+.btn:hover { background: var(--dialup); color: #fff; border-color: var(--dialup); }
+
+.panel { background: var(--surface-2); border-radius: var(--r-3); padding: var(--s-4) var(--s-5); min-width: 0; }
+.panel__head { display: flex; justify-content: space-between; align-items: center; gap: var(--s-3); margin-bottom: var(--s-4); }
+.panel__head h2 { font: 500 var(--text)/1.2 var(--font-display); letter-spacing: var(--track-tight); margin: 0; }
+
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-4); }
+.kpi { display: grid; gap: 10px; }
+.kpi__value { font: 500 clamp(28px, 2.6vw, 38px)/1 var(--font-display); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+.kpi__row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
+.kpi__value { white-space: nowrap; }
+.delta { white-space: nowrap; font: 500 var(--text-xs)/1 var(--font-mono); padding: 3px 6px; border-radius: var(--r-1); background: var(--lcd); color: var(--lcd-ink); }
+.delta--down { background: var(--sticky); color: var(--on-accent); }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 280px; gap: var(--s-4); }
+.chart { width: 100%; height: 240px; display: block; overflow: visible; }
+.chart .grid line { stroke: var(--line); }
+.chart .tick { font: 400 10px var(--font-mono); fill: var(--ink-2); }
+.chart .area { fill: color-mix(in srgb, var(--dialup) 10%, transparent); }
+.chart .line-a { fill: none; stroke: var(--dialup); stroke-width: 2; }
+.chart .line-b { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 3 4; }
+.chart .hover-dot { fill: var(--surface-2); stroke: var(--dialup); stroke-width: 2; opacity: 0; transition: opacity var(--dur-micro); }
+.legend { display: flex; gap: var(--s-4); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; font-size: var(--text-xs); color: var(--ink-2); }
+.legend i { width: 14px; height: 2px; background: var(--dialup); } .legend i.b { background: var(--ink); }
+.tip { position: absolute; pointer-events: none; padding: 6px 8px; background: var(--ink); color: var(--paper); border-radius: var(--r-1);
+  font: 500 11px/1.3 var(--font-mono); transform: translate(-50%, calc(-100% - 10px)); opacity: 0; transition: opacity var(--dur-micro); white-space: nowrap; }
+
+.side-stack { display: grid; gap: var(--s-4); align-content: start; }
+.sticky { padding: 12px 14px; background: var(--sticky); color: var(--on-accent); border-radius: 2px; font: 400 var(--text-xs)/1.4 var(--font-sans); rotate: -1deg;
+  box-shadow: 0 10px 20px -12px rgba(11,11,10,.35); }
+.sticky header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.sticky header button { border: 0; background: none; cursor: pointer; }
+.sticky label { display: flex; gap: 8px; align-items: center; padding: 3px 0; }
+.sticky input { accent-color: var(--on-accent); }
+.sticky label:has(input:checked) { text-decoration: line-through; opacity: .55; }
+.lcd { background: var(--lcd); color: var(--lcd-ink); padding: 12px 14px; border-radius: 6px; box-shadow: inset 0 0 0 3px rgba(34,48,10,.25), inset 0 0 24px rgba(34,48,10,.25);
+  font: 400 13px/1.4 var(--font-pixel); background-image: var(--tex-scan); background-blend-mode: multiply; min-height: 58px; }
+.caret::after { content: "▌"; animation: blink 1s steps(1) infinite; } @keyframes blink { 50% { opacity: 0; } }
+
+.table { width: 100%; border-collapse: collapse; }
+.table th { text-align: left; font: 500 var(--micro)/1 var(--font-mono); letter-spacing: var(--track-micro); text-transform: uppercase; color: var(--ink-2);
+  padding: 10px 12px; border-bottom: 1px solid var(--line-strong); white-space: nowrap; }
+.table td { padding: 11px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.table .num { font-family: var(--font-mono); text-align: right; font-variant-numeric: tabular-nums; }
+.table tbody tr:hover td { background: var(--paper); }
+.table .name { display: flex; align-items: center; gap: 10px; font-weight: 500; }
+.file { font: 400 var(--text-xs)/1 var(--font-mono); color: var(--ink-2); }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px; border-radius: var(--r-pill); font: 500 11px/1.2 var(--font-mono); text-transform: uppercase; letter-spacing: .04em; }
+.pill--live { background: var(--lcd); color: var(--lcd-ink); } .pill--review { background: var(--sticky); color: var(--on-accent); }
+.pill--fail { background: var(--signal); color: var(--on-accent); } .pill--draft { border: 1px solid var(--line-strong); color: var(--ink-2); }
+.avatar { width: 22px; height: 22px; border-radius: 50%; display: inline-grid; place-items: center; font: 600 10px/1 var(--font-sans); color: var(--on-accent); vertical-align: middle; margin-right: 6px; }
+.table-wrap { overflow-x: auto; }
+
+.prompt { display: flex; align-items: center; gap: 6px; padding: 6px 6px 6px 18px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-pill); }
+.prompt input { flex: 1; min-width: 0; border: 0; background: none; font: 400 var(--text-sm)/1 var(--font-sans); color: var(--ink); outline: none; }
+.icon-btn { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; border: 0; background: var(--paper-2); color: var(--ink); cursor: pointer; }
+.icon-btn--ink { background: var(--ink); color: var(--paper); }
+.icon-btn svg { width: 15px; height: 15px; }
+
+.statusbar { display: flex; gap: var(--s-5); align-items: center; padding: 8px var(--s-4); border-top: 1px solid var(--line); flex-wrap: wrap; }
+.statusbar .right { margin-left: auto; }
+.status { display: inline-flex; align-items: center; gap: 8px; font: 500 var(--micro)/1 var(--font-mono); letter-spacing: var(--track-micro); text-transform: uppercase; }
+.status i { width: 7px; height: 7px; border-radius: 50%; background: var(--online); animation: ping 2s var(--ease-out) infinite; }
+@keyframes ping { from { box-shadow: 0 0 0 0 rgba(25,194,107,.5); } to { box-shadow: 0 0 0 8px rgba(25,194,107,0); } }
+
+/* ---------- command palette (flat glass) ---------- */
+.scrim { position: fixed; inset: 0; z-index: var(--z-modal); display: grid; place-items: start center; padding-top: 14vh; background: rgba(11,11,10,.18);
+  opacity: 0; pointer-events: none; transition: opacity var(--dur-ui) var(--ease-out); }
+.scrim[data-open] { opacity: 1; pointer-events: auto; }
+.palette { width: min(560px, calc(100vw - 32px)); background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border); transform: translateY(-8px) scale(.98); transition: transform var(--dur-ui) var(--ease-out); }
+.scrim[data-open] .palette { transform: none; }
+.palette input { width: 100%; border: 0; border-bottom: 1px solid var(--line); background: transparent; padding: 16px 18px; font: 400 16px/1 var(--font-sans); color: var(--ink); outline: none; }
+.palette ul { list-style: none; margin: 0; padding: 6px; }
+.palette li { display: flex; justify-content: space-between; padding: 10px 12px; border-radius: var(--r-1); cursor: pointer; }
+.palette li[aria-selected="true"], .palette li:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+.palette li span:last-child { font: 400 var(--text-xs)/1 var(--font-mono); color: var(--ink-2); }
+
+.toast { position: fixed; right: 20px; bottom: 20px; z-index: var(--z-modal); display: flex; gap: 10px; align-items: center; padding: 10px 14px;
+  background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: var(--glass-border);
+  transform: translateY(16px); opacity: 0; transition: transform var(--dur-ui) var(--ease-spring), opacity var(--dur-ui); pointer-events: none; }
+.toast[data-show] { transform: none; opacity: 1; }
+.toast i { width: 8px; height: 8px; border-radius: 50%; background: var(--online); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1100px) { .grid-2 { grid-template-columns: 1fr; } .side-stack { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 900px) {
+  body { padding: 0; } .app { border-radius: 0; min-height: 100vh; }
+  .body { grid-template-columns: 1fr; padding: var(--s-3); } .side { display: none; }
+  .kpis { grid-template-columns: 1fr 1fr; gap: var(--s-3); } .kpi__value { font-size: 26px; } .panel { padding: var(--s-4); } .search-btn { min-width: 0; } .search-btn span, .bar__title, .nav-arrows { display: none; }
+  .side-stack { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 16 16"><path d="M2.5 7 8 2.5 13.5 7v6.5h-4v-4h-3v4h-4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-box" viewBox="0 0 16 16"><path d="M2.5 4.5 8 2l5.5 2.5v7L8 14l-5.5-2.5zM2.5 4.5 8 7l5.5-2.5M8 7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 16 16"><path d="M2.5 13.5h11M4.5 11V8M8 11V4.5M11.5 11V6.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 16 16"><path d="M2.5 9.5 4 3.5h8l1.5 6v4h-11zM2.5 9.5h3l1 1.5h3l1-1.5h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-bot" viewBox="0 0 16 16"><rect x="3" y="5" width="10" height="8" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 2.5V5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="6" cy="9" r="1" fill="currentColor"/><circle cx="10" cy="9" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.8v2M8 12.2v2M1.8 8h2M12.2 8h2M3.6 3.6 5 5M11 11l1.4 1.4M3.6 12.4 5 11M11 5l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-side" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 3v10" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-left" viewBox="0 0 16 16"><path d="M10 3.5 5.5 8l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-right" viewBox="0 0 16 16"><path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 16 16"><path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-up" viewBox="0 0 16 16"><path d="M8 13V3.5M4 7.5 8 3.5l4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 16 16"><rect x="6" y="2" width="4" height="7.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 8a4.5 4.5 0 0 0 9 0M8 12.5V14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+</svg>
+
+<div class="app" data-boot-window>
+  <header class="bar">
+    <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+    <button class="ghost" aria-label="Toggle sidebar"><svg><use href="#i-side"/></svg></button>
+    <span class="nav-arrows"><button class="ghost" aria-label="Back"><svg><use href="#i-left"/></svg></button><button class="ghost" aria-label="Forward"><svg><use href="#i-right"/></svg></button></span>
+    <span class="bar__title micro">workspace.app — ailany</span>
+    <button class="search-btn" data-palette-open aria-label="Open command palette"><svg width="14" height="14"><use href="#i-search"/></svg><span>Search or jump to…</span><kbd>⌘K</kbd></button>
+    <button class="ghost" data-theme-toggle aria-label="Toggle dark mode"><svg><use href="#i-moon"/></svg></button>
+  </header>
+
+  <div class="body">
+    <nav class="side" aria-label="Workspace" data-boot>
+      <a class="side__item is-active" href="#" aria-current="page"><svg><use href="#i-home"/></svg><span data-scramble>Home</span></a>
+      <a class="side__item" href="#"><svg><use href="#i-box"/></svg><span data-scramble>Projects</span></a>
+      <a class="side__item" href="#"><svg><use href="#i-chart"/></svg><span data-scramble>Analytics</span></a>
+      <a class="side__item" href="#"><svg><use href="#i-inbox"/></svg><span data-scramble>Inbox</span><span class="side__badge" aria-label="3 unread">3</span></a>
+      <a class="side__item" href="#"><svg><use href="#i-bot"/></svg><span data-scramble>Agents</span></a>
+      <p class="side__group">Projects</p>
+      <a class="side__item" href="#"><i class="dot" style="background:var(--lcd)"></i>Cloud Café</a>
+      <a class="side__item" href="#"><i class="dot" style="background:var(--sticky)"></i>Pebble Club</a>
+      <a class="side__item" href="#"><i class="dot" style="background:var(--dialup)"></i>sent. inbox</a>
+      <a class="side__item side__foot" href="#"><svg><use href="#i-gear"/></svg>Settings</a>
+    </nav>
+
+    <main class="main">
+      <div class="head" data-boot>
+        <div><p class="micro">[ workspace ] · Wed, Oct 1</p><h1>Good morning, Ailany</h1></div>
+        <div class="head__actions">
+          <div class="tabs" role="tablist" aria-label="Range">
+            <button role="tab" aria-selected="false">24h</button><button role="tab" aria-selected="true">14 days</button><button role="tab" aria-selected="false">Quarter</button>
+          </div>
+          <button class="btn btn--quiet">Export</button>
+          <button class="btn-gel" data-new>New project</button>
+        </div>
+      </div>
+
+      <section class="kpis" aria-label="Key numbers">
+        <div class="panel kpi" data-boot><span class="micro">Visitors</span><div class="kpi__row"><span class="kpi__value" data-count="12480">12,480</span><span class="delta">▲ 8.2%</span></div></div>
+        <div class="panel kpi" data-boot><span class="micro">Avg. time on site</span><div class="kpi__row"><span class="kpi__value">2m 41s</span><span class="delta">▲ 12s</span></div></div>
+        <div class="panel kpi" data-boot><span class="micro">Hellos received</span><div class="kpi__row"><span class="kpi__value" data-count="318">318</span><span class="delta delta--down">▼ 3.1%</span></div></div>
+        <div class="panel kpi" data-boot><span class="micro">Uptime</span><div class="kpi__row"><span class="kpi__value">99.98%</span><span class="delta">All good</span></div></div>
+      </section>
+
+      <div class="grid-2">
+        <section class="panel" style="position:relative" data-boot aria-labelledby="chart-title">
+          <div class="panel__head"><h2 id="chart-title">Visitors, last 14 days</h2>
+            <div class="legend"><span><i></i>This period</span><span><i class="b"></i>Previous</span></div></div>
+          <svg class="chart" data-chart role="img" aria-label="Line chart: visitors grew from about 640 to 1,120 per day over 14 days, above the previous period."></svg>
+          <div class="tip" data-tip></div>
+        </section>
+        <div class="side-stack">
+          <aside class="sticky" data-boot aria-label="Starter list">
+            <header><b>Starter list</b><button aria-label="Dismiss">✕</button></header>
+            <label><input type="checkbox" checked> Connect your domain</label>
+            <label><input type="checkbox" checked> Invite the team</label>
+            <label><input type="checkbox"> Publish your first page</label>
+            <label><input type="checkbox"> Set up analytics goals</label>
+          </aside>
+          <section class="panel" data-boot aria-labelledby="inbox-title">
+            <div class="panel__head"><h2 id="inbox-title">Inbox</h2><span class="micro">0 new</span></div>
+            <div class="lcd" data-type='["inbox zero :)","go outside maybe?","or start something new"]'><span data-out></span><span class="caret"></span></div>
+          </section>
+        </div>
+      </div>
+
+      <section class="panel" data-boot aria-labelledby="proj-title">
+        <div class="panel__head"><h2 id="proj-title">Projects</h2><button class="btn btn--quiet">View all</button></div>
+        <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>Project</th><th>Status</th><th>Owner</th><th>Updated</th><th class="num">Visitors</th><th class="num">Conv.</th></tr></thead>
+          <tbody>
+            <tr><td><span class="name"><i class="dot" style="background:var(--lcd)"></i>Cloud Café <span class="file">cloud-cafe.site</span></span></td><td><span class="pill pill--live">● Live</span></td><td><span class="avatar" style="background:var(--sticky)">AL</span>Ailany</td><td>2h ago</td><td class="num">6,204</td><td class="num">3.8%</td></tr>
+            <tr><td><span class="name"><i class="dot" style="background:var(--sticky)"></i>Pebble Club <span class="file">pebble.club</span></span></td><td><span class="pill pill--review">◐ In review</span></td><td><span class="avatar" style="background:var(--lcd)">MK</span>Mika</td><td>Yesterday</td><td class="num">3,117</td><td class="num">2.1%</td></tr>
+            <tr><td><span class="name"><i class="dot" style="background:var(--dialup)"></i>sent. inbox <span class="file">sent.app</span></span></td><td><span class="pill pill--fail">✕ Build failed</span></td><td><span class="avatar" style="background:var(--sticker)">JO</span>Jo</td><td>3d ago</td><td class="num">2,859</td><td class="num">1.4%</td></tr>
+            <tr><td><span class="name"><i class="dot" style="background:var(--ink-3)"></i>Untitled 404 <span class="file">draft</span></span></td><td><span class="pill pill--draft">○ Draft</span></td><td><span class="avatar" style="background:var(--lcd)">AL</span>Ailany</td><td>1w ago</td><td class="num">—</td><td class="num">—</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <form class="prompt" data-boot onsubmit="event.preventDefault(); this.reset();">
+        <input placeholder="Ask your workspace anything…" aria-label="Ask your workspace">
+        <button type="button" class="icon-btn" aria-label="Voice input"><svg><use href="#i-mic"/></svg></button>
+        <button class="icon-btn icon-btn--ink" aria-label="Send"><svg><use href="#i-up"/></svg></button>
+      </form>
+    </main>
+  </div>
+
+  <footer class="statusbar">
+    <span class="status"><i></i> Synced</span><span class="micro">3 agents running</span><span class="micro">v2.0.1</span>
+    <span class="micro right" data-clock></span>
+  </footer>
+</div>
+
+<div class="scrim" data-palette>
+  <div class="palette" role="dialog" aria-modal="true" aria-label="Command palette">
+    <input placeholder="Type a command or search…" aria-label="Command" data-palette-input>
+    <ul role="listbox">
+      <li role="option" aria-selected="true"><span>New project</span><span>N</span></li>
+      <li role="option"><span>Go to Analytics</span><span>G A</span></li>
+      <li role="option"><span>Invite teammate</span><span>I</span></li>
+      <li role="option"><span>Toggle dark mode</span><span>⇧ D</span></li>
+    </ul>
+  </div>
+</div>
+<div class="toast" role="status" aria-live="polite" data-toast><i></i><span>Project “Untitled 2” created</span></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script>
+const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* theme: remember per viewer, safe if storage is blocked */
+const root = document.documentElement;
+try { const t = localStorage.getItem('theme'); if (t) root.dataset.theme = t; } catch {}
+document.querySelector('[data-theme-toggle]').addEventListener('click', () => {
+  const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = dark ? 'light' : 'dark';
+  try { localStorage.setItem('theme', root.dataset.theme); } catch {}
+});
+
+/* motion §3: window boot, first load only */
+(function boot() {
+  if (REDUCE || !window.gsap) return;
+  let seen = false;
+  try { seen = sessionStorage.getItem('app-booted') === '1'; sessionStorage.setItem('app-booted', '1'); } catch {}
+  if (seen) return;
+  gsap.timeline({ defaults: { ease: 'expo.out' } })
+    .from('[data-boot-window]', { scale: 0.94, opacity: 0, duration: 0.9 })
+    .from('[data-boot]', { opacity: 0, y: 10, stagger: 0.04, duration: 0.6 }, '-=0.5');
+})();
+
+/* motion §12: count-ups */
+document.querySelectorAll('[data-count]').forEach(el => {
+  const end = +el.dataset.count, fmt = n => Math.round(n).toLocaleString('en-US');
+  if (REDUCE || !window.gsap) { el.textContent = fmt(end); return; }
+  const o = { v: 0 };
+  gsap.to(o, { v: end, duration: 1.4, ease: 'power2.out', delay: 0.4, onUpdate: () => el.textContent = fmt(o.v) });
+});
+
+/* motion §5: scramble on sidebar labels */
+const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789▀▁▂▃▄▅▆▇█░▒▓■□▢▣◧◨◩◪';
+document.querySelectorAll('[data-scramble]').forEach(el => {
+  const text = el.textContent.trim();
+  el.style.display = 'inline-block'; el.style.minWidth = el.getBoundingClientRect().width + 'px';
+  el.closest('a').addEventListener('mouseenter', () => {
+    if (REDUCE) return;
+    cancelAnimationFrame(el._raf);
+    const start = performance.now();
+    const frame = now => {
+      const p = Math.min(1, (now - start) / 300), reveal = Math.floor(p * text.length);
+      el.textContent = [...text].map((c, i) => i < reveal ? c : GLYPHS[(Math.random() * GLYPHS.length) | 0]).join('');
+      if (p < 1) el._raf = requestAnimationFrame(frame);
+    };
+    el._raf = requestAnimationFrame(frame);
+  });
+});
+
+/* tabs */
+document.querySelectorAll('.tabs').forEach(t => t.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  t.querySelectorAll('button').forEach(x => x.setAttribute('aria-selected', x === b));
+}));
+
+/* chart: tiny SVG line chart, no library */
+(function chart() {
+  const svg = document.querySelector('[data-chart]'), tip = document.querySelector('[data-tip]');
+  const A = [640, 702, 688, 760, 731, 820, 905, 870, 940, 1010, 980, 1060, 1095, 1120];
+  const B = [610, 640, 655, 630, 670, 700, 690, 720, 735, 750, 742, 770, 790, 800];
+  const draw = () => {
+    const W = svg.clientWidth, H = svg.clientHeight, pad = { l: 36, r: 8, t: 8, b: 22 };
+    const max = 1200, min = 500, x = i => pad.l + i * (W - pad.l - pad.r) / (A.length - 1), y = v => pad.t + (1 - (v - min) / (max - min)) * (H - pad.t - pad.b);
+    const path = d => d.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join('');
+    let g = '<g class="grid">';
+    for (const v of [600, 800, 1000, 1200]) g += `<line x1="${pad.l}" x2="${W - pad.r}" y1="${y(v)}" y2="${y(v)}"/><text class="tick" x="0" y="${y(v) + 3}">${v / 1000}k</text>`;
+    g += '</g>';
+    const day = i => new Date(2026, 8, 18 + i).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    for (const i of [0, 4, 8, 13]) g += `<text class="tick" x="${x(i)}" y="${H - 4}" text-anchor="${i === 13 ? 'end' : 'middle'}">${day(i)}</text>`;
+    svg.innerHTML = g + `<path class="area" d="${path(A)}L${x(A.length - 1)},${y(min)}L${x(0)},${y(min)}Z"/><path class="line-b" d="${path(B)}"/><path class="line-a" d="${path(A)}"/><circle class="hover-dot" r="4" cx="-20" cy="-20"/>`;
+    const dot = svg.querySelector('.hover-dot');
+    svg.onpointermove = e => {
+      const r = svg.getBoundingClientRect(), i = Math.max(0, Math.min(A.length - 1, Math.round((e.clientX - r.left - pad.l) / ((W - pad.l - pad.r) / (A.length - 1)))));
+      dot.setAttribute('cx', x(i)); dot.setAttribute('cy', y(A[i])); dot.style.opacity = 1;
+      tip.style.left = x(i) + svg.offsetLeft + 'px'; tip.style.top = y(A[i]) + svg.offsetTop + 'px';
+      tip.textContent = `${day(i)} · ${A[i].toLocaleString()} visitors`; tip.style.opacity = 1;
+    };
+    svg.onpointerleave = () => { tip.style.opacity = 0; dot.style.opacity = 0; };
+  };
+  new ResizeObserver(draw).observe(svg);
+})();
+
+/* LCD typewriter (motion §11) */
+document.querySelectorAll('[data-type]').forEach(box => {
+  const lines = JSON.parse(box.dataset.type), out = box.querySelector('[data-out]');
+  if (REDUCE) { out.textContent = lines[0]; return; }
+  let l = 0;
+  const type = (s, i = 0) => i <= s.length ? setTimeout(() => { out.textContent = s.slice(0, i); type(s, i + 1); }, 70) : setTimeout(() => type(lines[l = (l + 1) % lines.length]), 2400);
+  type(lines[0]);
+});
+
+/* command palette (flat glass) + toast */
+const scrim = document.querySelector('[data-palette]'), input = document.querySelector('[data-palette-input]');
+let opener = null;
+const openP = () => { opener = document.activeElement; scrim.setAttribute('data-open', ''); setTimeout(() => input.focus(), 30); };
+const closeP = () => { scrim.removeAttribute('data-open'); opener?.focus(); };
+document.querySelector('[data-palette-open]').addEventListener('click', openP);
+addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); scrim.hasAttribute('data-open') ? closeP() : openP(); }
+  if (e.key === 'Escape' && scrim.hasAttribute('data-open')) closeP();
+});
+scrim.addEventListener('click', e => { if (e.target === scrim) closeP(); });
+const toast = document.querySelector('[data-toast]');
+document.querySelector('[data-new]').addEventListener('click', () => {
+  toast.setAttribute('data-show', ''); clearTimeout(toast._t); toast._t = setTimeout(() => toast.removeAttribute('data-show'), 2600);
+});
+
+document.querySelectorAll('[data-clock]').forEach(el => {
+  const tick = () => el.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  tick(); setInterval(tick, 10000);
+});
+</script>
+</body>
+</html>

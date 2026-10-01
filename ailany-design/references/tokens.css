@@ -1,0 +1,155 @@
+/* ==========================================================================
+   ailany-design tokens
+   Modern web with dial-up memories. Paste this whole block into a page's
+   <style> (or a tokens.css) and build only with these variables.
+
+   Fonts (one <link>, keep the families you actually use):
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Silkscreen&display=swap" rel="stylesheet">
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* ---- Surfaces: warm paper, not pure white ------------------------------ */
+  --paper:        #E6E6E1;  /* page background (desk) */
+  --paper-2:      #DCDCD6;  /* sunken areas, table stripes, hover on paper */
+  --surface:      #F4F4F2;  /* windows, cards, panels sitting on paper */
+  --surface-2:    #FFFFFF;  /* inputs, inner wells, popovers */
+  --ink:          #0B0B0A;  /* text + solid buttons */
+  --ink-2:        #57554F;  /* secondary text (AA on paper: 5.9:1) */
+  --ink-3:        #8E8B85;  /* decorative only: dot grid, disabled, dividers */
+  --line:         rgba(11, 11, 10, 0.12);
+  --line-strong:  rgba(11, 11, 10, 0.28);
+
+  /* ---- Y2K accents: use ONE as the page's lead, others as sparks --------- */
+  --dialup:       #2433FF;  /* electric blue: links, gel buttons, focus. White text OK (7:1) */
+  --dialup-ink:   #1A2A6C;  /* navy for serif headlines on light/sky */
+  --lcd:          #C8F560;  /* LCD lime: highlights, screens, success. Ink text only */
+  --lcd-ink:      #22300A;  /* pixel text on lime */
+  --sticky:       #F3C4EC;  /* sticky-note pink: notes, onboarding, badges. Ink text only */
+  --signal:       #FF4A1C;  /* signal orange: cursor dot, live, alerts. Ink text only (white fails) */
+  --sticker:      #FFE600;  /* sticker yellow: round CTAs, "new". Ink text only */
+  --online:       #19C26B;  /* status dot only, never text */
+  --on-accent:    #0B0B0A;  /* text on lcd/sticky/signal/sticker. Stays dark in dark mode */
+
+  /* Sky for heroes (the calm optimism of the early internet) */
+  --sky: linear-gradient(180deg, #BFDDFF 0%, #E4F1FF 45%, #FFFFFF 100%);
+
+  /* ---- Type ---------------------------------------------------------------- */
+  --font-display: "Inter Tight", "Helvetica Neue", Arial, sans-serif;  /* huge, tight */
+  --font-sans:    "Geist", "Inter", system-ui, sans-serif;             /* UI + body */
+  --font-mono:    "Geist Mono", ui-monospace, "SFMono-Regular", monospace; /* micro labels, data */
+  --font-serif:   "Instrument Serif", "Times New Roman", serif;       /* one soft headline, quotes */
+  --font-pixel:   "Silkscreen", "Geist Mono", monospace;               /* stickers, LCD, tiny tags */
+
+  /* Fluid display scale: tight tracking, tight leading */
+  --step-hero:  clamp(3.5rem, 11vw, 10rem);   /* wordmarks, one per page */
+  --step-1:     clamp(2.5rem, 6.5vw, 6rem);   /* section headlines */
+  --step-2:     clamp(1.75rem, 3.6vw, 3rem);  /* sub-headlines, big numbers */
+  --step-3:     clamp(1.25rem, 2vw, 1.625rem);/* card titles */
+  --text-lg:    1.125rem;
+  --text:       1rem;       /* body 16px */
+  --text-sm:    0.875rem;   /* UI 14px: app chrome, tables */
+  --text-xs:    0.75rem;    /* captions */
+  --micro:      0.6875rem;  /* 11px mono/pixel labels, ALWAYS uppercase + tracked */
+
+  --track-display: -0.045em;
+  --track-tight:   -0.02em;
+  --track-micro:    0.08em;
+  --lead-display:   0.88;
+  --lead-tight:     1.1;
+  --lead-body:      1.5;
+
+  /* ---- Space: 4px base, generous on landing, compact in apps --------------- */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 24px;
+  --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 160px;
+  --gutter: clamp(16px, 2.2vw, 32px);
+  --section: clamp(96px, 14vw, 200px);
+
+  /* ---- Shape ---------------------------------------------------------------- */
+  --r-0: 0px;        /* flat glass, editorial blocks */
+  --r-1: 6px;        /* tags, small buttons, inputs inside windows */
+  --r-2: 10px;       /* list rows, menus */
+  --r-3: 16px;       /* windows, cards */
+  --r-pill: 999px;   /* nav, chat input, gel buttons, tags */
+  --chamfer: 14%;    /* octagon cards: clip-path corners */
+
+  /* ---- Depth: flat by default; old-internet hard shadows as accents -------- */
+  --shadow-none: none;
+  --shadow-window: 0 1px 0 rgba(255,255,255,.6) inset, 0 30px 60px -30px rgba(11,11,10,.25);
+  --shadow-hard: 4px 4px 0 var(--ink);           /* stickers, retro buttons */
+  --shadow-hard-sm: 2px 2px 0 var(--ink);
+
+  /* ---- Flat glass (overlays only: modals, nav, popovers, toasts) ----------- */
+  --glass-bg:     rgba(240, 240, 238, 0.72);
+  --glass-blur:   blur(10px) saturate(1.3);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.55);
+
+  /* Aqua gel (primary CTA): */
+  --gel: linear-gradient(180deg, #6C8BFF 0%, #2433FF 52%, #1B27D6 100%);
+  --gel-shine: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,0));
+
+  /* ---- Motion --------------------------------------------------------------- */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);     /* expo out: reveals, windows */
+  --ease-inout:  cubic-bezier(0.76, 0, 0.24, 1);    /* curtains, page wipes */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* stickers, toggles, pop-ins */
+  --dur-micro: 160ms;  /* hover, press */
+  --dur-ui:    320ms;  /* menus, toasts, modals */
+  --dur-reveal: 900ms; /* text + section reveals */
+  --dur-hero:  1400ms; /* preloader beats */
+
+  /* ---- Texture (pick ONE per page) ------------------------------------------ */
+  --tex-dots: radial-gradient(var(--ink-3) 0.8px, transparent 0.8px) 0 0 / 22px 22px;
+  --tex-scan: repeating-linear-gradient(0deg, rgba(0,0,0,.06) 0 1px, transparent 1px 3px);
+
+  /* ---- Layers ---------------------------------------------------------------- */
+  --z-texture: 1; --z-content: 2; --z-nav: 50; --z-cursor: 80; --z-modal: 90; --z-loader: 100;
+}
+
+/* ---- Dark: "after midnight" desk. Same accents, inverted paper ------------ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #0B0B0A; --paper-2: #181715; --surface: #151513; --surface-2: #1F1E1B;
+    --ink: #E8E8E3; --ink-2: #9A968F; --ink-3: #4A4843;
+    --line: rgba(232,232,227,.12); --line-strong: rgba(232,232,227,.28);
+    --dialup: #7C9BFF; --dialup-ink: #BFD0FF;
+    --glass-bg: rgba(24, 23, 21, 0.84); --glass-border: 1px solid rgba(255,255,255,.08);
+    --shadow-window: 0 30px 60px -30px rgba(0,0,0,.8);
+    --sky: linear-gradient(180deg, #0E1640 0%, #0B0B0A 100%);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #0B0B0A; --paper-2: #181715; --surface: #151513; --surface-2: #1F1E1B;
+  --ink: #E8E8E3; --ink-2: #9A968F; --ink-3: #4A4843;
+  --line: rgba(232,232,227,.12); --line-strong: rgba(232,232,227,.28);
+  --dialup: #7C9BFF; --dialup-ink: #BFD0FF;
+  --glass-bg: rgba(24, 23, 21, 0.84); --glass-border: 1px solid rgba(255,255,255,.08);
+  --shadow-window: 0 30px 60px -30px rgba(0,0,0,.8);
+  --sky: linear-gradient(180deg, #0E1640 0%, #0B0B0A 100%);
+}
+
+/* ---- Base ------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 var(--text)/var(--lead-body) var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+::selection { background: var(--lcd); color: var(--on-accent); }
+:focus-visible { outline: 2px solid var(--dialup); outline-offset: 3px; border-radius: 4px; }
+img, video, canvas, svg { display: block; max-width: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important; scroll-behavior: auto !important;
+  }
+}
