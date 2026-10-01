@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ourspace — your corner of the internet</title>
+<meta name="description" content="Landing page demo for a social app with fully customizable profiles. Built with the ailany-design skill.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Silkscreen&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.css">
+<style>
+/* tokens:start */
+/* ==========================================================================
+   ailany-design tokens
+   Modern web with dial-up memories. Paste this whole block into a page's
+   <style> (or a tokens.css) and build only with these variables.
+
+   Fonts (one <link>, keep the families you actually use):
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Silkscreen&display=swap" rel="stylesheet">
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* ---- Surfaces: warm paper, not pure white ------------------------------ */
+  --paper:        #E6E6E1;  /* page background (desk) */
+  --paper-2:      #DCDCD6;  /* sunken areas, table stripes, hover on paper */
+  --surface:      #F4F4F2;  /* windows, cards, panels sitting on paper */
+  --surface-2:    #FFFFFF;  /* inputs, inner wells, popovers */
+  --ink:          #0B0B0A;  /* text + solid buttons */
+  --ink-2:        #57554F;  /* secondary text (AA on paper: 5.9:1) */
+  --ink-3:        #8E8B85;  /* decorative only: dot grid, disabled, dividers */
+  --line:         rgba(11, 11, 10, 0.12);
+  --line-strong:  rgba(11, 11, 10, 0.28);
+
+  /* ---- Y2K accents: use ONE as the page's lead, others as sparks --------- */
+  --dialup:       #2433FF;  /* electric blue: links, gel buttons, focus. White text OK (7:1) */
+  --dialup-ink:   #1A2A6C;  /* navy for serif headlines on light/sky */
+  --lcd:          #C8F560;  /* LCD lime: highlights, screens, success. Ink text only */
+  --lcd-ink:      #22300A;  /* pixel text on lime */
+  --sticky:       #F3C4EC;  /* sticky-note pink: notes, onboarding, badges. Ink text only */
+  --signal:       #FF4A1C;  /* signal orange: cursor dot, live, alerts. Ink text only (white fails) */
+  --sticker:      #FFE600;  /* sticker yellow: round CTAs, "new". Ink text only */
+  --online:       #19C26B;  /* status dot only, never text */
+  --on-accent:    #0B0B0A;  /* text on lcd/sticky/signal/sticker. Stays dark in dark mode */
+
+  /* Sky for heroes (the calm optimism of the early internet) */
+  --sky: linear-gradient(180deg, #BFDDFF 0%, #E4F1FF 45%, #FFFFFF 100%);
+
+  /* ---- Type ---------------------------------------------------------------- */
+  --font-display: "Inter Tight", "Helvetica Neue", Arial, sans-serif;  /* huge, tight */
+  --font-sans:    "Geist", "Inter", system-ui, sans-serif;             /* UI + body */
+  --font-mono:    "Geist Mono", ui-monospace, "SFMono-Regular", monospace; /* micro labels, data */
+  --font-serif:   "Instrument Serif", "Times New Roman", serif;       /* one soft headline, quotes */
+  --font-pixel:   "Silkscreen", "Geist Mono", monospace;               /* stickers, LCD, tiny tags */
+
+  /* Fluid display scale: tight tracking, tight leading */
+  --step-hero:  clamp(3.5rem, 11vw, 10rem);   /* wordmarks, one per page */
+  --step-1:     clamp(2.5rem, 6.5vw, 6rem);   /* section headlines */
+  --step-2:     clamp(1.75rem, 3.6vw, 3rem);  /* sub-headlines, big numbers */
+  --step-3:     clamp(1.25rem, 2vw, 1.625rem);/* card titles */
+  --text-lg:    1.125rem;
+  --text:       1rem;       /* body 16px */
+  --text-sm:    0.875rem;   /* UI 14px: app chrome, tables */
+  --text-xs:    0.75rem;    /* captions */
+  --micro:      0.6875rem;  /* 11px mono/pixel labels, ALWAYS uppercase + tracked */
+
+  --track-display: -0.045em;
+  --track-tight:   -0.02em;
+  --track-micro:    0.08em;
+  --lead-display:   0.88;
+  --lead-tight:     1.1;
+  --lead-body:      1.5;
+
+  /* ---- Space: 4px base, generous on landing, compact in apps --------------- */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 24px;
+  --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 160px;
+  --gutter: clamp(16px, 2.2vw, 32px);
+  --section: clamp(96px, 14vw, 200px);
+
+  /* ---- Shape ---------------------------------------------------------------- */
+  --r-0: 0px;        /* flat glass, editorial blocks */
+  --r-1: 6px;        /* tags, small buttons, inputs inside windows */
+  --r-2: 10px;       /* list rows, menus */
+  --r-3: 16px;       /* windows, cards */
+  --r-pill: 999px;   /* nav, chat input, gel buttons, tags */
+  --chamfer: 14%;    /* octagon cards: clip-path corners */
+
+  /* ---- Depth: flat by default; old-internet hard shadows as accents -------- */
+  --shadow-none: none;
+  --shadow-window: 0 1px 0 rgba(255,255,255,.6) inset, 0 30px 60px -30px rgba(11,11,10,.25);
+  --shadow-hard: 4px 4px 0 var(--ink);           /* stickers, retro buttons */
+  --shadow-hard-sm: 2px 2px 0 var(--ink);
+
+  /* ---- Flat glass (overlays only: modals, nav, popovers, toasts) ----------- */
+  --glass-bg:     rgba(240, 240, 238, 0.72);
+  --glass-blur:   blur(10px) saturate(1.3);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.55);
+
+  /* Aqua gel (primary CTA): */
+  --gel: linear-gradient(180deg, #6C8BFF 0%, #2433FF 52%, #1B27D6 100%);
+  --gel-shine: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,0));
+
+  /* ---- Motion --------------------------------------------------------------- */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);     /* expo out: reveals, windows */
+  --ease-inout:  cubic-bezier(0.76, 0, 0.24, 1);    /* curtains, page wipes */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* stickers, toggles, pop-ins */
+  --dur-micro: 160ms;  /* hover, press */
+  --dur-ui:    320ms;  /* menus, toasts, modals */
+  --dur-reveal: 900ms; /* text + section reveals */
+  --dur-hero:  1400ms; /* preloader beats */
+
+  /* ---- Texture (pick ONE per page) ------------------------------------------ */
+  --tex-dots: radial-gradient(var(--ink-3) 0.8px, transparent 0.8px) 0 0 / 22px 22px;
+  --tex-scan: repeating-linear-gradient(0deg, rgba(0,0,0,.06) 0 1px, transparent 1px 3px);
+
+  /* ---- Layers ---------------------------------------------------------------- */
+  --z-texture: 1; --z-content: 2; --z-nav: 50; --z-cursor: 80; --z-modal: 90; --z-loader: 100;
+}
+
+/* ---- Dark: "after midnight" desk. Same accents, inverted paper ------------ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #0B0B0A; --paper-2: #181715; --surface: #151513; --surface-2: #1F1E1B;
+    --ink: #E8E8E3; --ink-2: #9A968F; --ink-3: #4A4843;
+    --line: rgba(232,232,227,.12); --line-strong: rgba(232,232,227,.28);
+    --dialup: #7C9BFF; --dialup-ink: #BFD0FF;
+    --glass-bg: rgba(24, 23, 21, 0.84); --glass-border: 1px solid rgba(255,255,255,.08);
+    --shadow-window: 0 30px 60px -30px rgba(0,0,0,.8);
+    --sky: linear-gradient(180deg, #0E1640 0%, #0B0B0A 100%);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #0B0B0A; --paper-2: #181715; --surface: #151513; --surface-2: #1F1E1B;
+  --ink: #E8E8E3; --ink-2: #9A968F; --ink-3: #4A4843;
+  --line: rgba(232,232,227,.12); --line-strong: rgba(232,232,227,.28);
+  --dialup: #7C9BFF; --dialup-ink: #BFD0FF;
+  --glass-bg: rgba(24, 23, 21, 0.84); --glass-border: 1px solid rgba(255,255,255,.08);
+  --shadow-window: 0 30px 60px -30px rgba(0,0,0,.8);
+  --sky: linear-gradient(180deg, #0E1640 0%, #0B0B0A 100%);
+}
+
+/* ---- Base ------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 var(--text)/var(--lead-body) var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+::selection { background: var(--lcd); color: var(--on-accent); }
+:focus-visible { outline: 2px solid var(--dialup); outline-offset: 3px; border-radius: 4px; }
+img, video, canvas, svg { display: block; max-width: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important; scroll-behavior: auto !important;
+  }
+}
+/* tokens:end */
+
+/* ---------- utilities ---------- */
+.wrap { max-width: 1440px; margin: 0 auto; padding: 0 var(--gutter); }
+.micro { font: 500 var(--micro)/1.3 var(--font-mono); letter-spacing: var(--track-micro); text-transform: uppercase; color: var(--ink-2); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+a { color: inherit; }
+
+/* ---------- preloader (motion §1) ---------- */
+.loader { position: fixed; inset: 0; z-index: var(--z-loader); }
+.loader__bg { position: absolute; inset: 0; background: var(--paper); }
+.loader__mark { position: absolute; left: var(--gutter); bottom: -0.12em; display: flex; overflow: hidden;
+  font: 600 var(--step-hero)/0.9 var(--font-display); letter-spacing: var(--track-display); transform-origin: 0 0; }
+.loader__mark span { display: inline-block; }
+.loader__count { position: absolute; right: var(--gutter); bottom: var(--gutter); font-variant-numeric: tabular-nums; }
+.loader__skip { position: absolute; right: var(--gutter); top: var(--gutter); background: none; border: 0; cursor: pointer; }
+.is-loading { overflow: hidden; }
+
+/* ---------- nav (components §5) ---------- */
+.pillnav { position: fixed; top: 16px; left: 50%; translate: -50% 0; z-index: var(--z-nav);
+  width: min(1040px, calc(100vw - 32px)); display: flex; align-items: center; gap: var(--s-5);
+  padding: 6px 6px 6px 20px; border-radius: var(--r-pill); background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: var(--glass-border); }
+.logo { font: 600 22px/1 var(--font-display); letter-spacing: var(--track-display); text-decoration: none; }
+.pillnav ul { display: flex; gap: var(--s-5); margin: 0 auto; padding: 0; list-style: none; }
+.pillnav ul a { text-decoration: none; font: 500 var(--micro)/1 var(--font-mono); letter-spacing: var(--track-micro); text-transform: uppercase; white-space: nowrap; }
+.btn { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-radius: var(--r-1);
+  background: var(--ink); color: var(--paper); border: 0; cursor: pointer; text-decoration: none;
+  font: 500 var(--micro)/1 var(--font-mono); letter-spacing: var(--track-micro); text-transform: uppercase; white-space: nowrap; }
+.btn:hover { background: var(--dialup); color: #fff; }
+.btn--pill { height: 38px; padding: 0 18px; border-radius: var(--r-pill); }
+@media (max-width: 860px) { .pillnav ul { display: none; } .pillnav { justify-content: space-between; } }
+
+.status { display: inline-flex; align-items: center; gap: 8px; font: 500 var(--micro)/1 var(--font-mono); letter-spacing: var(--track-micro); text-transform: uppercase; }
+.status i { width: 7px; height: 7px; border-radius: 50%; background: var(--online); animation: ping 2s var(--ease-out) infinite; }
+@keyframes ping { from { box-shadow: 0 0 0 0 rgba(25,194,107,.5); } to { box-shadow: 0 0 0 8px rgba(25,194,107,0); } }
+
+/* ---------- gel button (components §3) ---------- */
+.btn-gel { position: relative; display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 24px;
+  border-radius: var(--r-pill); border: 1px solid #1A22B0; color: #fff; background: var(--gel); text-decoration: none;
+  font: 500 16px/1 var(--font-sans); box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 6px 16px -6px rgba(36,51,255,.6);
+  cursor: pointer; transition: transform var(--dur-micro) var(--ease-out), filter var(--dur-micro); white-space: nowrap; }
+.btn-gel::before { content: ""; position: absolute; inset: 2px 10px auto; height: 45%; border-radius: var(--r-pill);
+  background: var(--gel-shine); opacity: .7; pointer-events: none; }
+.btn-gel:hover { filter: brightness(1.08) saturate(1.1); }
+.btn-gel:active { transform: translateY(1px) scale(.98); }
+
+/* ---------- hero ---------- */
+.hero { position: relative; height: 100svh; min-height: 700px; overflow: hidden; }
+.globe { position: absolute; inset: 0; z-index: 0; }
+.globe canvas { width: 100% !important; height: 100% !important; display: block; }
+.pins { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.hero__ui { position: absolute; inset: 0; z-index: 2; pointer-events: none; padding: 104px var(--gutter) var(--s-6);
+  display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr auto; max-width: 1440px; margin: 0 auto; }
+.hero__ui > * { pointer-events: auto; }
+.hero__tl { grid-area: 1 / 1; align-self: start; }
+.hero__tr { grid-area: 1 / 2; justify-self: end; align-self: start; }
+.hero__bl { grid-area: 3 / 1; align-self: end; display: grid; gap: var(--s-4); justify-items: start; max-width: 340px; }
+.hero__br { grid-area: 3 / 2; align-self: end; justify-self: end; text-align: right; }
+.headline { font: 600 clamp(3rem, 7.4vw, 8.5rem)/var(--lead-display) var(--font-display); letter-spacing: var(--track-display); margin: var(--s-3) 0 0; }
+.headline--right { margin: 0; }
+.lead { font: 400 var(--text)/1.45 var(--font-sans); margin: 0; padding: var(--s-4);
+  background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); }
+.widget { display: grid; gap: 6px; padding: var(--s-4); background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); min-width: 210px; }
+.widget b { font: 500 var(--step-3)/1 var(--font-mono); font-variant-numeric: tabular-nums; }
+@media (max-width: 760px) {
+  .hero { height: auto; min-height: 100svh; display: flex; flex-direction: column; }
+  .globe, .pins { position: absolute; inset: 92px 0 auto; height: 64vh; }
+  .hero__ui { position: relative; inset: auto; display: flex; flex-direction: column; gap: var(--s-4); min-height: 100svh; padding-top: 96px; }
+  .hero__tr { display: none; }
+  .hero__br { text-align: left; justify-self: start; margin-top: auto; }
+  .hero__bl { max-width: none; order: 4; }
+}
+
+/* ---------- profile pop-up windows (components §1, mini) ---------- */
+.pop { position: absolute; left: 0; top: 0; will-change: transform, opacity; }
+.pop__win { position: absolute; left: 12px; bottom: 12px; width: 184px; background: var(--surface); border: 1px solid var(--line-strong);
+  border-radius: 10px; box-shadow: 0 18px 40px -20px rgba(11,11,10,.45); overflow: hidden; transform-origin: 0 100%; }
+.pop--flip .pop__win { left: auto; right: 12px; transform-origin: 100% 100%; }
+.pop__bar { display: flex; align-items: center; gap: 8px; height: 26px; padding: 0 10px; border-bottom: 1px solid var(--line);
+  font: 500 10px/1 var(--font-mono); letter-spacing: .04em; color: var(--ink-2); white-space: nowrap; overflow: hidden; }
+.pop__lights { display: flex; gap: 4px; flex: none; }
+.pop__lights i { width: 7px; height: 7px; border-radius: 50%; background: #FF5F57; }
+.pop__lights i:nth-child(2) { background: #FEBC2E; } .pop__lights i:nth-child(3) { background: #28C840; }
+.pop__body { height: 96px; background: var(--tint, var(--lcd)); position: relative; }
+.pop__body::before { content: ""; position: absolute; left: 12px; top: 12px; width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(255,255,255,.55); box-shadow: inset 0 0 0 1.5px rgba(11,11,10,.12); }
+.pop__body::after { content: ""; position: absolute; left: 54px; top: 16px; width: 92px; height: 8px; border-radius: 4px;
+  background: rgba(11,11,10,.14); box-shadow: 0 14px 0 -1px rgba(11,11,10,.09), -42px 44px 0 0 rgba(255,255,255,.4); }
+.pop__leader { position: absolute; left: 0; bottom: 0; width: 17px; height: 1.5px; background: var(--ink); transform-origin: 0 50%; rotate: -45deg; }
+.pop--flip .pop__leader { rotate: -135deg; }
+.pop__handle { overflow: hidden; text-overflow: ellipsis; }
+.pop__place { margin-left: auto; flex: none; color: var(--ink); text-transform: uppercase; letter-spacing: var(--track-micro); }
+@media (max-width: 760px) { .pop__win { width: 150px; } .pop__body { height: 74px; } }
+
+/* ---------- marquee + footer ---------- */
+.marquee { overflow: hidden; white-space: nowrap; border-block: 1px solid var(--line-strong); padding: var(--s-4) 0; }
+.marquee__track { display: inline-flex; gap: 2ch; animation: marquee 30s linear infinite; font: 500 var(--step-1)/1.1 var(--font-display); letter-spacing: var(--track-display); }
+.marquee:hover .marquee__track { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+.foot { background: var(--ink); color: var(--paper); overflow: hidden; border-radius: var(--r-3) var(--r-3) 0 0; margin-top: var(--section); }
+.foot__mark { font: 600 clamp(5rem, 22vw, 21rem)/.78 var(--font-display); letter-spacing: -.06em; padding-top: var(--s-8); margin-left: -.04em; white-space: nowrap; }
+.statusbar { display: flex; justify-content: space-between; gap: var(--s-4); flex-wrap: wrap; padding: 10px var(--gutter); border-top: 1px solid rgba(232,232,227,.15); }
+.statusbar .micro { color: rgba(232,232,227,.7); }
+.foot .status { color: var(--paper); }
+</style>
+</head>
+<body>
+
+<div class="loader" data-loader>
+  <div class="loader__bg"></div>
+  <div class="loader__mark" aria-hidden="true" data-text="ourspace"></div>
+  <span class="loader__count micro">000</span>
+  <button class="loader__skip micro" type="button">Skip ↵</button>
+</div>
+
+<nav class="pillnav" aria-label="Main">
+  <a href="#" class="logo" data-logo>ourspace</a>
+  <ul>
+    <li><a href="#" data-scramble>Profiles</a></li>
+    <li><a href="#" data-scramble>Music</a></li>
+    <li><a href="#" data-scramble>Friends</a></li>
+    <li><a href="#" data-scramble>Bulletins</a></li>
+  </ul>
+  <a class="btn btn--pill" href="#">Log in</a>
+</nav>
+
+<main>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="globe" data-globe aria-hidden="true"></div>
+    <div class="pins" data-pins aria-hidden="true"></div>
+    <p class="sr-only">A glossy 3D Earth slowly spins. Every couple of seconds a pin drops onto a city and a tiny profile window pops open next to it.</p>
+
+    <div class="hero__ui">
+      <div class="hero__tl">
+        <p class="micro">[ a place on the internet that's yours ]</p>
+        <h1 class="headline" id="hero-title">Your corner</h1>
+      </div>
+      <div class="hero__tr widget" aria-live="off">
+        <span class="status"><i></i> Online now</span>
+        <b data-online>1,204</b>
+        <span class="micro">people, all over the map</span>
+      </div>
+      <div class="hero__br"><p class="headline headline--right" aria-hidden="true">of the internet.</p></div>
+      <div class="hero__bl">
+        <p class="lead">Make a profile that actually looks like you. Pick the song, the colors, the wallpaper and your top friends, then go find your people anywhere on earth.</p>
+        <a class="btn-gel" href="#">Claim your space</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div class="marquee__track">
+    <span>Top 8 ✱ Profile songs ✱ Custom backgrounds ✱ Glitter optional ✱ Guestbooks ✱</span>
+    <span>Top 8 ✱ Profile songs ✱ Custom backgrounds ✱ Glitter optional ✱ Guestbooks ✱</span>
+  </div></div>
+</main>
+
+<footer class="foot">
+  <div class="foot__mark wrap" aria-hidden="true">ourspace</div>
+  <div class="statusbar"><span class="status"><i></i> All systems normal</span><span class="micro">© 2026 ourspace · demo built with ailany-design</span><span class="micro">v0.1</span></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+<script>
+const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+gsap.defaults({ ease: 'expo.out', duration: 0.9 });
+let lenis = null;
+if (!REDUCE) {
+  lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+}
+
+/* motion §1: brand preloader */
+function preloaderRise() {
+  const L = document.querySelector('[data-loader]');
+  if (!L) return Promise.resolve();
+  let seen = false;
+  try { seen = sessionStorage.getItem('booted') === '1'; sessionStorage.setItem('booted', '1'); } catch {}
+  if (REDUCE || seen) { L.remove(); return Promise.resolve(); }
+  document.documentElement.classList.add('is-loading');
+  lenis?.stop();
+  const mark = L.querySelector('.loader__mark');
+  mark.innerHTML = [...mark.dataset.text].map(c => `<span>${c === ' ' ? '&nbsp;' : c}</span>`).join('');
+  const letters = mark.querySelectorAll('span');
+  const count = L.querySelector('.loader__count'), logo = document.querySelector('[data-logo]');
+  const n = { v: 0 };
+  gsap.set(logo, { opacity: 0 });
+  const dock = k => {
+    const a = mark.getBoundingClientRect(), b = logo.getBoundingClientRect();
+    return { x: b.left - a.left, y: b.top - a.top, s: b.height / a.height }[k];
+  };
+  const tl = gsap.timeline();
+  tl.from(letters, { yPercent: 110, duration: 0.9, stagger: 0.06 })
+    .to(n, { v: 100, duration: 1.3, ease: 'power2.inOut', onUpdate: () => count.textContent = String(Math.round(n.v)).padStart(3, '0') }, 0)
+    .to(mark, { x: () => dock('x'), y: () => dock('y'), scale: () => dock('s'), duration: 0.8, ease: 'expo.inOut' }, 1.45)
+    .to(L.querySelector('.loader__bg'), { yPercent: -100, duration: 0.8, ease: 'expo.inOut' }, 1.45)
+    .to([count, L.querySelector('.loader__skip')], { opacity: 0, duration: 0.2 }, 1.45)
+    .set(logo, { opacity: 1 })
+    .to(mark, { opacity: 0, duration: 0.15 });
+  const skip = () => tl.progress(1);
+  L.querySelector('.loader__skip').addEventListener('click', skip);
+  addEventListener('keydown', skip, { once: true });
+  return new Promise(res => tl.eventCallback('onComplete', () => {
+    L.remove(); document.documentElement.classList.remove('is-loading'); lenis?.start(); res();
+  }));
+}
+
+/* motion §5: scramble hover */
+const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789▀▁▂▃▄▅▆▇█▉▊▋▌▍▎▏▐░▒▓■□▢▣▤▥▦▧▨▩◧◨◩◪';
+function scramble(el, text = el.dataset.text, duration = 350) {
+  if (REDUCE) { el.textContent = text; return; }
+  cancelAnimationFrame(el._raf);
+  const start = performance.now();
+  const frame = now => {
+    const p = Math.min(1, (now - start) / duration), reveal = Math.floor(p * text.length);
+    el.textContent = [...text].map((c, i) => c === ' ' || i < reveal ? c : GLYPHS[(Math.random() * GLYPHS.length) | 0]).join('');
+    if (p < 1) el._raf = requestAnimationFrame(frame);
+  };
+  el._raf = requestAnimationFrame(frame);
+}
+document.querySelectorAll('[data-scramble]').forEach(el => {
+  el.dataset.text = el.textContent.trim();
+  el.setAttribute('aria-label', el.dataset.text);
+  el.style.display = 'inline-block';
+  el.style.minWidth = el.getBoundingClientRect().width + 'px';
+  el.addEventListener('mouseenter', () => scramble(el));
+  el.addEventListener('focus', () => scramble(el));
+});
+
+/* live-ish "online now" counter */
+(function online() {
+  const el = document.querySelector('[data-online]'); let n = 1204;
+  if (REDUCE) return;
+  setInterval(() => { n += Math.round((Math.random() - 0.4) * 9); el.textContent = n.toLocaleString('en-US'); }, 1600);
+})();
+
+function introHero() {
+  if (REDUCE) return;
+  gsap.from('.hero__ui > *', { opacity: 0, y: 18, stagger: 0.07, duration: 1 });
+}
+
+document.fonts.ready.then(preloaderRise).then(() => {
+  introHero(); window.__booted = true; dispatchEvent(new Event('booted'));
+});
+</script>
+
+<script type="importmap">{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const host = document.querySelector('[data-globe]');
+const layer = document.querySelector('[data-pins]');
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const tok = n => new THREE.Color(css(n));
+
+/* ---------- renderer / scene ---------- */
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping = THREE.NeutralToneMapping;   // keeps the token colors true (ACES turns the blue ocean lavender)
+host.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+const sun = new THREE.DirectionalLight(0xffffff, 1.4); sun.position.set(-4, 5, 6); scene.add(sun);
+
+/* ---------- globe ---------- */
+const R = 2;
+const tilt = new THREE.Group();              // axial tilt + a little "look down" so the north shows
+tilt.rotation.set(0.32, 0, THREE.MathUtils.degToRad(-23.4));
+scene.add(tilt);
+const ocean = tok('--dialup').lerp(new THREE.Color('#ffffff'), 0.18);
+const globeMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.32, metalness: 0,
+  clearcoat: 1, clearcoatRoughness: 0.08, iridescence: 0.18, iridescenceIOR: 1.3, iridescenceThicknessRange: [100, 600] });
+const globe = new THREE.Mesh(new THREE.SphereGeometry(R, 96, 64), globeMat);
+globe.rotation.y = -1.2;                     // start with the Atlantic / Europe / Africa side facing us
+tilt.add(globe);
+
+// toy-colored land texture, drawn at runtime from Natural Earth (world-atlas) with d3-geo
+(async function paintEarth() {
+  const W = 2048, H = 1024, c = document.createElement('canvas'); c.width = W; c.height = H;
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#' + ocean.getHexString(); ctx.fillRect(0, 0, W, H);
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  globeMat.map = tex; globeMat.needsUpdate = true;
+  try {
+    const [{ feature }, { geoEquirectangular, geoPath, geoGraticule10 }, land] = await Promise.all([
+      import('https://cdn.jsdelivr.net/npm/topojson-client@3/+esm'),
+      import('https://cdn.jsdelivr.net/npm/d3-geo@3/+esm'),
+      fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json').then(r => r.json()),
+    ]);
+    const proj = geoEquirectangular().scale(W / (2 * Math.PI)).translate([W / 2, H / 2]);
+    const path = geoPath(proj, ctx);
+    ctx.beginPath(); path(geoGraticule10()); ctx.strokeStyle = 'rgba(255,255,255,.16)'; ctx.lineWidth = 1.5; ctx.stroke();
+    const shapes = feature(land, land.objects.land);
+    ctx.beginPath(); path(shapes);
+    ctx.fillStyle = css('--lcd'); ctx.fill();
+    ctx.lineJoin = 'round'; ctx.strokeStyle = css('--lcd-ink'); ctx.globalAlpha = 0.55; ctx.lineWidth = 2.5; ctx.stroke(); ctx.globalAlpha = 1;
+    tex.needsUpdate = true;
+  } catch (e) { console.warn('ourspace: land map unavailable, showing ocean only', e); }
+})();
+
+// soft rim "atmosphere"
+const atmo = new THREE.Mesh(new THREE.SphereGeometry(R * 1.07, 64, 48), new THREE.ShaderMaterial({
+  transparent: true, depthWrite: false, side: THREE.BackSide,
+  uniforms: { color: { value: new THREE.Color('#8EC5FF') } },
+  vertexShader: `varying vec3 vN; varying vec3 vV;
+    void main(){ vN = normalize(normalMatrix * normal); vec4 mv = modelViewMatrix * vec4(position,1.); vV = normalize(-mv.xyz); gl_Position = projectionMatrix * mv; }`,
+  fragmentShader: `uniform vec3 color; varying vec3 vN; varying vec3 vV;
+    void main(){ float i = pow(clamp(0.62 - dot(vN, vec3(0., 0., 1.)), 0., 1.), 3.0); gl_FragColor = vec4(color, i * 0.5); }`,
+}));
+tilt.add(atmo);
+
+/* ---------- moon buddy (motion §8 eyes) ---------- */
+const eyeWhite = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.3 });
+const eyeBlack = new THREE.MeshStandardMaterial({ color: 0x0b0b0a, roughness: 0.2 });
+function eyes(r) {
+  const g = new THREE.Group(), list = [];
+  for (const sx of [-1, 1]) {
+    const eye = new THREE.Group();
+    eye.add(new THREE.Mesh(new THREE.SphereGeometry(0.22, 24, 16), eyeWhite));
+    const pupil = new THREE.Mesh(new THREE.SphereGeometry(0.11, 16, 12), eyeBlack);
+    pupil.position.z = 0.15; eye.add(pupil);
+    eye.position.set(sx * 0.27, 0.15, r); g.add(eye); list.push(eye);
+  }
+  return { g, list };
+}
+const moon = new THREE.Group();
+moon.add(new THREE.Mesh(new THREE.SphereGeometry(1, 48, 32), new THREE.MeshPhysicalMaterial({ color: tok('--sticky'),
+  roughness: 0.2, clearcoat: 1, clearcoatRoughness: 0.08, iridescence: 1, iridescenceIOR: 1.35, iridescenceThicknessRange: [120, 900] })));
+const moonEyes = eyes(0.95); moon.add(moonEyes.g);
+moon.scale.setScalar(0.34);
+scene.add(moon);
+
+/* ---------- pins ---------- */
+const CITIES = [
+  ['Tokyo', 35.68, 139.69, '@tokyo_kid'], ['London', 51.51, -0.13, '@mind_the_gap'], ['New York', 40.71, -74.0, '@bodega_cat'],
+  ['Los Angeles', 34.05, -118.24, '@palmtree.exe'], ['Mexico City', 19.43, -99.13, '@tacos_al_pastor'], ['São Paulo', -23.55, -46.63, '@sampa.sounds'],
+  ['Buenos Aires', -34.6, -58.38, '@tango_dial_up'], ['Lagos', 6.52, 3.38, '@afrobeats_only'], ['Cairo', 30.04, 31.24, '@nile_nights'],
+  ['Nairobi', -1.29, 36.82, '@matatu_mix'], ['Cape Town', -33.92, 18.42, '@table_mtn'], ['Paris', 48.86, 2.35, '@croissant_core'],
+  ['Berlin', 52.52, 13.4, '@techno_tuesday'], ['Stockholm', 59.33, 18.07, '@fika_forever'], ['Istanbul', 41.01, 28.98, '@two_continents'],
+  ['Dubai', 25.2, 55.27, '@desert_glow'], ['Mumbai', 19.08, 72.88, '@monsoon_mood'], ['Delhi', 28.61, 77.21, '@chai_at_4'],
+  ['Bangkok', 13.76, 100.5, '@tuk_tuk_tunes'], ['Singapore', 1.35, 103.82, '@hawker_hearts'], ['Jakarta', -6.2, 106.85, '@kopi_kid'],
+  ['Manila', 14.6, 120.98, '@karaoke_queen'], ['Seoul', 37.57, 126.98, '@pc_bang'], ['Taipei', 25.03, 121.57, '@boba_bytes'],
+  ['Sydney', -33.87, 151.21, '@harbour_hello'], ['Auckland', -36.85, 174.76, '@kiwi_keys'], ['Toronto', 43.65, -79.38, '@six_side'],
+  ['Vancouver', 49.28, -123.12, '@rainy_day_rss'], ['Chicago', 41.88, -87.63, '@deep_dish_dj'], ['Reykjavík', 64.15, -21.94, '@aurora_away'],
+  ['Honolulu', 21.31, -157.86, '@aloha_offline'], ['Lima', -12.05, -77.04, '@ceviche_club'], ['Bogotá', 4.71, -74.07, '@cafe_colombia'],
+  ['Moscow', 55.76, 37.62, '@snow_day'], ['Anchorage', 61.22, -149.9, '@northern_dms'], ['Marrakesh', 31.63, -7.99, '@souk_sounds'],
+];
+const TINTS = ['--lcd', '--sticky', '--sticker', '--dialup'];
+const latLon = (lat, lon, r) => {
+  const phi = THREE.MathUtils.degToRad(90 - lat), theta = THREE.MathUtils.degToRad(lon + 180);
+  return new THREE.Vector3(-r * Math.sin(phi) * Math.cos(theta), r * Math.cos(phi), r * Math.sin(phi) * Math.sin(theta));
+};
+const pinHeadGeo = new THREE.SphereGeometry(0.075, 24, 16);
+const pinNeedleGeo = new THREE.ConeGeometry(0.022, 0.26, 12); pinNeedleGeo.rotateX(Math.PI); pinNeedleGeo.translate(0, 0.13, 0);
+const rippleGeo = new THREE.RingGeometry(0.05, 0.065, 40); rippleGeo.rotateX(-Math.PI / 2);
+const pinMat = new THREE.MeshPhysicalMaterial({ color: tok('--signal'), roughness: 0.2, clearcoat: 1, clearcoatRoughness: 0.05 });
+const needleMat = new THREE.MeshStandardMaterial({ color: 0x6b6862, metalness: 0.6, roughness: 0.3 });
+const UP = new THREE.Vector3(0, 1, 0);
+
+const MOBILE = () => innerWidth < 760;
+const live = [];          // { city, root, drop, head, ripple, el, alpha }
+let recent = [];
+const tmp = new THREE.Vector3(), camDir = new THREE.Vector3();
+
+function facing(local) {  // how much a point on the globe faces the camera (1 = dead center)
+  tmp.copy(local).applyMatrix4(globe.matrixWorld).normalize();
+  return tmp.dot(camDir.copy(camera.position).normalize());
+}
+function pickCity() {
+  globe.updateMatrixWorld(true);
+  const options = CITIES.filter(c => !recent.includes(c[0])).map(c => {
+    const p = latLon(c[1], c[2], R);
+    // prefer cities left of center: the globe turns them toward the middle while the window is open
+    tmp.copy(p).applyMatrix4(globe.matrixWorld);
+    const f = facing(p);
+    return { c, p, f, score: f - tmp.x * 0.08 + Math.random() * 0.35 };   // face-on first, slight bias to the left side
+  }).filter(o => o.f > 0.6 && !live.some(l => l.root.position.distanceTo(o.p) < 1.0));
+  if (!options.length) return null;
+  options.sort((a, b) => b.score - a.score);
+  return options[0];
+}
+
+function spawn() {
+  const max = MOBILE() || REDUCE ? 1 : 3;
+  if (live.length >= max) return;
+  const pick = pickCity(); if (!pick) return;
+  const [name, , , handle] = pick.c;
+  recent = [name, ...recent].slice(0, 10);
+
+  const root = new THREE.Group();
+  root.position.copy(pick.p);
+  root.quaternion.setFromUnitVectors(UP, pick.p.clone().normalize());
+  const drop = new THREE.Group(); root.add(drop);
+  drop.add(new THREE.Mesh(pinNeedleGeo, needleMat));
+  const head = new THREE.Mesh(pinHeadGeo, pinMat); head.position.y = 0.29; drop.add(head);
+  const ripple = new THREE.Mesh(rippleGeo, new THREE.MeshBasicMaterial({ color: tok('--signal'), transparent: true, opacity: 0.9, side: THREE.DoubleSide }));
+  ripple.position.y = 0.005; root.add(ripple);
+  globe.add(root);
+
+  const el = document.createElement('div');
+  el.className = 'pop';
+  el.innerHTML = `<span class="pop__leader"></span><div class="pop__win" style="--tint: var(${TINTS[(Math.random() * TINTS.length) | 0]})">
+      <div class="pop__bar"><span class="pop__lights"><i></i><i></i><i></i></span><span class="pop__handle">${handle}</span><span class="pop__place">${name}</span></div>
+      <div class="pop__body"></div></div>`;
+  layer.appendChild(el);
+  const win = el.querySelector('.pop__win');
+  const item = { root, drop, head, ripple, el, win, alpha: { v: 0 } };
+  live.push(item);
+
+  const tl = gsap.timeline({ onComplete: () => {
+    globe.remove(root); ripple.material.dispose(); el.remove(); live.splice(live.indexOf(item), 1);
+  } });
+  if (REDUCE) {
+    drop.position.y = 0;
+    tl.to(item.alpha, { v: 1, duration: 0.3 }).set(ripple, { visible: false })
+      .to(item.alpha, { v: 0, duration: 0.3 }, 3.6).to(root.scale, { x: 0.001, y: 0.001, z: 0.001, duration: 0.2 }, 3.6);
+    return;
+  }
+  drop.position.y = 1.4; drop.scale.setScalar(0.6);
+  tl.to(drop.position, { y: 0, duration: 0.75, ease: 'bounce.out' })
+    .to(drop.scale, { x: 1, y: 1, z: 1, duration: 0.5, ease: 'back.out(2)' }, 0)
+    .fromTo(ripple.scale, { x: 1, y: 1, z: 1 }, { x: 5, y: 5, z: 5, duration: 1.1, ease: 'expo.out' }, 0.55)
+    .to(ripple.material, { opacity: 0, duration: 1.1, ease: 'power2.out' }, 0.55)
+    .to(item.alpha, { v: 1, duration: 0.01 }, 0.5)
+    .fromTo(win, { scale: 0.2, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.55, ease: 'back.out(1.8)' }, 0.5)
+    .fromTo(el.querySelector('.pop__leader'), { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: 'power2.out' }, 0.45)
+    .to(win, { scale: 0.6, opacity: 0, duration: 0.3, ease: 'power2.in' }, 4.3)
+    .to(el.querySelector('.pop__leader'), { scaleX: 0, duration: 0.2 }, 4.45)
+    .to(drop.scale, { x: 0.001, y: 0.001, z: 0.001, duration: 0.35, ease: 'back.in(2)' }, 4.5);
+}
+
+/* ---------- layout ---------- */
+let W = 1, H = 1;
+function resize() {
+  const r = host.getBoundingClientRect(); W = r.width; H = r.height;
+  renderer.setSize(W, H, false); camera.aspect = W / H;
+  const t = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * 2;          // visible height per unit distance
+  const fill = MOBILE() ? 0.82 : 0.6;                                         // share of the short side the globe takes
+  camera.position.set(0, 0, Math.max((2 * R) / (t * fill), (2 * R) / (t * camera.aspect * (MOBILE() ? 0.86 : 0.62))));
+  camera.lookAt(0, 0, 0); camera.updateProjectionMatrix(); camera.updateMatrixWorld();
+}
+new ResizeObserver(resize).observe(host); resize();
+
+/* ---------- pointer ---------- */
+const ndc = new THREE.Vector2(), target = new THREE.Vector3(0, 0, 8);
+addEventListener('pointermove', e => {
+  ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+  target.set(ndc.x * 8, ndc.y * 5, 8);
+});
+
+/* ---------- intro + schedule ---------- */
+function start() {
+  if (!REDUCE) {
+    gsap.from(tilt.scale, { x: 0.6, y: 0.6, z: 0.6, duration: 1.6, ease: 'expo.out' });
+    gsap.from(globe.rotation, { y: globe.rotation.y - 2.2, duration: 2.2, ease: 'expo.out' });
+  }
+  setTimeout(spawn, REDUCE ? 400 : 1300);
+  setInterval(() => { if (visible && !document.hidden) spawn(); }, REDUCE ? 4400 : 2200);
+}
+if (window.__booted || !document.querySelector('[data-loader]')) start(); else addEventListener('booted', start, { once: true });
+
+/* ---------- loop ---------- */
+let visible = true;
+new IntersectionObserver(([e]) => visible = e.isIntersecting).observe(host);
+const clock = new THREE.Clock(), head = new THREE.Vector3();
+renderer.setAnimationLoop(() => {
+  const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
+  if (!visible) return;
+  if (!REDUCE) {
+    globe.rotation.y += dt * 0.09;
+    tilt.rotation.x += ((0.32 - ndc.y * 0.12) - tilt.rotation.x) * 0.03;
+    tilt.rotation.y += ((ndc.x * 0.18) - tilt.rotation.y) * 0.03;
+    moon.position.set(Math.cos(t * 0.35) * 3.3, 0.9 + Math.sin(t * 0.35) * 0.7, Math.sin(t * 0.35) * 2.4);
+  } else moon.position.set(2.9, 1.6, 1.2);
+  for (const e of moonEyes.list) e.lookAt(target);
+  scene.updateMatrixWorld();
+
+  for (const p of live) {
+    p.head.getWorldPosition(head);
+    const f = facing(p.root.position);
+    head.project(camera);
+    const x = (head.x + 1) / 2 * W, y = (1 - head.y) / 2 * H;
+    const flip = x > W - 230;
+    p.el.classList.toggle('pop--flip', flip);
+    p.el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+    p.el.style.opacity = (p.alpha.v * THREE.MathUtils.clamp((f - 0.12) / 0.25, 0, 1)).toFixed(3);
+  }
+  renderer.render(scene, camera);
+});
+</script>
+</body>
+</html>

@@ -56,6 +56,11 @@ dashboard for my newsletter"*, *"restyle this pricing section in my style"*.
 Open `ailany-design/examples/landing.html` or `dashboard.html` in a browser (they load fonts and
 libraries from public CDNs). On the landing page, the preloader runs once per browser session.
 
+### Demos
+- `demos/ourspace/`: landing page for a MySpace-inspired social app. A glossy 3D Earth spins
+  while pins drop onto cities and tiny profile windows pop open. Built with the skill as a test.
+  Open `demos/ourspace/index.html` in a browser.
+
 ### Change the style
 Edit `references/tokens.css`, then run `python3 ailany-design/scripts/sync_tokens.py` so the
-examples pick up the change. Add new references to `references/inspiration.md`.
+examples and demos pick up the change. Add new references to `references/inspiration.md`.
