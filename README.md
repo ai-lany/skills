@@ -57,7 +57,7 @@ Open `ailany-design/examples/landing.html` or `dashboard.html` in a browser (the
 libraries from public CDNs). On the landing page, the preloader runs once per browser session.
 
 ### Demos
-- `demos/ourspace/`: landing page for a MySpace-inspired social app. A glossy 3D Earth spins
+- `demos/ourspace/`: landing page for a MySpace-inspired social app. A realistic 3D Earth spins
   while pins drop onto cities and tiny profile windows pop open. Built with the skill as a test.
   Open `demos/ourspace/index.html` in a browser.
 

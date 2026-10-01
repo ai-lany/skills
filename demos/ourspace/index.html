@@ -430,58 +430,61 @@ const tok = n => new THREE.Color(css(n));
 /* ---------- renderer / scene ---------- */
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.toneMapping = THREE.NeutralToneMapping;   // keeps the token colors true (ACES turns the blue ocean lavender)
+renderer.toneMapping = THREE.NeutralToneMapping;
 host.appendChild(renderer.domElement);
 const scene = new THREE.Scene();
-scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;  // only the pins use it
 const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
-const sun = new THREE.DirectionalLight(0xffffff, 1.4); sun.position.set(-4, 5, 6); scene.add(sun);
+// daylight from the upper left, plus a sky/ground fill so the night side never goes pitch black on the paper page
+const sun = new THREE.DirectionalLight(0xfff6ea, 3.2); sun.position.set(-5, 3, 6); scene.add(sun);
+scene.add(new THREE.HemisphereLight(0xdfe9ff, 0x2a2622, 1.25));
 
-/* ---------- globe ---------- */
+/* ---------- globe: realistic Earth ----------
+   Textures: NASA Blue Marble imagery (public domain) as packaged by three-globe, plus the
+   three.js example cloud layer. Day color + terrain relief + a water mask so only oceans catch
+   the sun glint, land stays matte. */
 const R = 2;
 const tilt = new THREE.Group();              // axial tilt + a little "look down" so the north shows
 tilt.rotation.set(0.32, 0, THREE.MathUtils.degToRad(-23.4));
 scene.add(tilt);
-const ocean = tok('--dialup').lerp(new THREE.Color('#ffffff'), 0.18);
-const globeMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.32, metalness: 0,
-  clearcoat: 1, clearcoatRoughness: 0.08, iridescence: 0.18, iridescenceIOR: 1.3, iridescenceThicknessRange: [100, 600] });
-const globe = new THREE.Mesh(new THREE.SphereGeometry(R, 96, 64), globeMat);
+const IMG = 'https://cdn.jsdelivr.net/npm/three-globe@2/example/img/';
+const loader = new THREE.TextureLoader();
+const load = (url, srgb) => new Promise(res => loader.load(url, t => {
+  if (srgb) t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = renderer.capabilities.getMaxAnisotropy(); res(t);
+}, undefined, () => { console.warn('ourspace: texture unavailable', url); res(null); }));
+
+const globeMat = new THREE.MeshPhongMaterial({ color: 0x1d3f74, specular: 0x3a4a5a, shininess: 16, bumpScale: 3 });
+const globe = new THREE.Mesh(new THREE.SphereGeometry(R, 128, 96), globeMat);
 globe.rotation.y = -1.2;                     // start with the Atlantic / Europe / Africa side facing us
 tilt.add(globe);
 
-// toy-colored land texture, drawn at runtime from Natural Earth (world-atlas) with d3-geo
-(async function paintEarth() {
-  const W = 2048, H = 1024, c = document.createElement('canvas'); c.width = W; c.height = H;
-  const ctx = c.getContext('2d');
-  ctx.fillStyle = '#' + ocean.getHexString(); ctx.fillRect(0, 0, W, H);
-  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
-  tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
-  globeMat.map = tex; globeMat.needsUpdate = true;
-  try {
-    const [{ feature }, { geoEquirectangular, geoPath, geoGraticule10 }, land] = await Promise.all([
-      import('https://cdn.jsdelivr.net/npm/topojson-client@3/+esm'),
-      import('https://cdn.jsdelivr.net/npm/d3-geo@3/+esm'),
-      fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json').then(r => r.json()),
-    ]);
-    const proj = geoEquirectangular().scale(W / (2 * Math.PI)).translate([W / 2, H / 2]);
-    const path = geoPath(proj, ctx);
-    ctx.beginPath(); path(geoGraticule10()); ctx.strokeStyle = 'rgba(255,255,255,.16)'; ctx.lineWidth = 1.5; ctx.stroke();
-    const shapes = feature(land, land.objects.land);
-    ctx.beginPath(); path(shapes);
-    ctx.fillStyle = css('--lcd'); ctx.fill();
-    ctx.lineJoin = 'round'; ctx.strokeStyle = css('--lcd-ink'); ctx.globalAlpha = 0.55; ctx.lineWidth = 2.5; ctx.stroke(); ctx.globalAlpha = 1;
-    tex.needsUpdate = true;
-  } catch (e) { console.warn('ourspace: land map unavailable, showing ocean only', e); }
-})();
+const cloudMat = new THREE.MeshPhongMaterial({ transparent: true, opacity: 0.85, depthWrite: false, visible: false });
+const clouds = new THREE.Mesh(new THREE.SphereGeometry(R * 1.01, 96, 64), cloudMat);
+clouds.rotation.y = globe.rotation.y;
+tilt.add(clouds);
 
-// soft rim "atmosphere"
-const atmo = new THREE.Mesh(new THREE.SphereGeometry(R * 1.07, 64, 48), new THREE.ShaderMaterial({
+Promise.all([
+  load(IMG + 'earth-blue-marble.jpg', true),
+  load(IMG + 'earth-topology.png'),
+  load(IMG + 'earth-water.png'),
+  load('https://cdn.jsdelivr.net/gh/mrdoob/three.js@r170/examples/textures/planets/earth_clouds_1024.png', true),
+]).then(([day, relief, water, cloudTex]) => {
+  if (day) { globeMat.map = day; globeMat.color.set(0xffffff); }
+  if (relief) globeMat.bumpMap = relief;
+  if (water) globeMat.specularMap = water;
+  globeMat.needsUpdate = true;
+  if (cloudTex) { cloudMat.map = cloudTex; cloudMat.visible = true; cloudMat.needsUpdate = true; }
+});
+
+// thin blue atmosphere at the rim
+const atmo = new THREE.Mesh(new THREE.SphereGeometry(R * 1.06, 64, 48), new THREE.ShaderMaterial({
   transparent: true, depthWrite: false, side: THREE.BackSide,
-  uniforms: { color: { value: new THREE.Color('#8EC5FF') } },
-  vertexShader: `varying vec3 vN; varying vec3 vV;
-    void main(){ vN = normalize(normalMatrix * normal); vec4 mv = modelViewMatrix * vec4(position,1.); vV = normalize(-mv.xyz); gl_Position = projectionMatrix * mv; }`,
-  fragmentShader: `uniform vec3 color; varying vec3 vN; varying vec3 vV;
-    void main(){ float i = pow(clamp(0.62 - dot(vN, vec3(0., 0., 1.)), 0., 1.), 3.0); gl_FragColor = vec4(color, i * 0.5); }`,
+  uniforms: { color: { value: new THREE.Color('#7FB2FF') } },
+  vertexShader: `varying vec3 vN;
+    void main(){ vN = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.); }`,
+  fragmentShader: `uniform vec3 color; varying vec3 vN;
+    void main(){ float i = pow(clamp(0.62 - dot(vN, vec3(0., 0., 1.)), 0., 1.), 3.0); gl_FragColor = vec4(color, i * 0.42); }`,
 }));
 tilt.add(atmo);
 
@@ -500,8 +503,7 @@ function eyes(r) {
   return { g, list };
 }
 const moon = new THREE.Group();
-moon.add(new THREE.Mesh(new THREE.SphereGeometry(1, 48, 32), new THREE.MeshPhysicalMaterial({ color: tok('--sticky'),
-  roughness: 0.2, clearcoat: 1, clearcoatRoughness: 0.08, iridescence: 1, iridescenceIOR: 1.35, iridescenceThicknessRange: [120, 900] })));
+moon.add(new THREE.Mesh(new THREE.SphereGeometry(1, 48, 32), new THREE.MeshStandardMaterial({ color: 0xb9b6b0, roughness: 0.95, metalness: 0 })));   // matte lunar grey
 const moonEyes = eyes(0.95); moon.add(moonEyes.g);
 moon.scale.setScalar(0.34);
 scene.add(moon);
@@ -628,7 +630,7 @@ addEventListener('pointermove', e => {
 function start() {
   if (!REDUCE) {
     gsap.from(tilt.scale, { x: 0.6, y: 0.6, z: 0.6, duration: 1.6, ease: 'expo.out' });
-    gsap.from(globe.rotation, { y: globe.rotation.y - 2.2, duration: 2.2, ease: 'expo.out' });
+    gsap.from([globe.rotation, clouds.rotation], { y: globe.rotation.y - 2.2, duration: 2.2, ease: 'expo.out' });
   }
   setTimeout(spawn, REDUCE ? 400 : 1300);
   setInterval(() => { if (visible && !document.hidden) spawn(); }, REDUCE ? 4400 : 2200);
@@ -644,6 +646,7 @@ renderer.setAnimationLoop(() => {
   if (!visible) return;
   if (!REDUCE) {
     globe.rotation.y += dt * 0.09;
+    clouds.rotation.y += dt * 0.105;
     tilt.rotation.x += ((0.32 - ndc.y * 0.12) - tilt.rotation.x) * 0.03;
     tilt.rotation.y += ((ndc.x * 0.18) - tilt.rotation.y) * 0.03;
     moon.position.set(Math.cos(t * 0.35) * 3.3, 0.9 + Math.sin(t * 0.35) * 0.7, Math.sin(t * 0.35) * 2.4);
