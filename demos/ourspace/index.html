@@ -242,7 +242,7 @@ a { color: inherit; }
 
 /* ---------- profile pop-up windows (components §1, mini) ---------- */
 .pop { position: absolute; left: 0; top: 0; will-change: transform, opacity; }
-.pop { --dx: 30px; --dy: 42px; }            /* where the window's corner sits relative to the dot */
+.pop { --dx: 18px; --dy: 25px; }            /* where the window's corner sits relative to the dot */
 .pop__win { position: absolute; left: calc(var(--dx) - 4px); bottom: calc(var(--dy) - 4px); width: 184px; background: var(--surface); border: 1px solid var(--line-strong);
   border-radius: 10px; box-shadow: 0 18px 40px -20px rgba(11,11,10,.45); overflow: hidden; transform-origin: 0 100%; }
 .pop--flip .pop__win { left: auto; right: calc(var(--dx) - 4px); transform-origin: 100% 100%; }
@@ -261,7 +261,7 @@ a { color: inherit; }
 .pop--flip .pop__leader { rotate: calc(-180deg + atan2(var(--dy), var(--dx))); }
 .pop__handle { overflow: hidden; text-overflow: ellipsis; }
 .pop__place { margin-left: auto; flex: none; color: var(--ink); text-transform: uppercase; letter-spacing: var(--track-micro); }
-@media (max-width: 760px) { .pop { --dx: 24px; --dy: 34px; } .pop__win { width: 150px; } .pop__body { height: 74px; } }
+@media (max-width: 760px) { .pop { --dx: 14px; --dy: 20px; } .pop__win { width: 150px; } .pop__body { height: 74px; } }
 
 /* ---------- location marker: a small ink dot + a straight line up to the window ---------- */
 .mk-dot { position: absolute; left: -4.5px; top: -4.5px; width: 9px; height: 9px; border-radius: 50%;
